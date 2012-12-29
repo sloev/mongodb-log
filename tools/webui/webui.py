@@ -28,7 +28,7 @@ class index:
 
         def fill_missing(el):
             if not 'host' in el:
-                el['host'] = '(unknow)'
+                el['host'] = '(unknown)'
             return el
         logs = map(fill_missing, db.find(args, limit=100).sort('$natural',
         DESCENDING))
