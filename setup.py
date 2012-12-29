@@ -1,9 +1,9 @@
-
+# -*- coding: utf-8 *-*
 try:
     from setuptools import setup
 except ImportError:
     from distutils import setup
-    
+
 setup(
       name='mongodb-log',
       version='0.1.0',

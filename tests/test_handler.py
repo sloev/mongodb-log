@@ -1,8 +1,8 @@
+# -*- coding: utf-8 *-*
 import unittest
 import logging
 
 from pymongo.connection import Connection
-
 from mongolog.handlers import MongoHandler
 
 
@@ -23,7 +23,6 @@ class TestRootLoggerHandler(unittest.TestCase):
     def tearDown(self):
         """ Drop used database """
         self.conn.drop_database(self.db_name)
-        
 
     def testLogging(self):
         """ Simple logging example """
@@ -33,7 +32,7 @@ class TestRootLoggerHandler(unittest.TestCase):
         log.addHandler(MongoHandler(self.collection))
         log.debug('test')
 
-        r = self.collection.find_one({'levelname':'DEBUG', 'msg':'test'})
+        r = self.collection.find_one({'levelname': 'DEBUG', 'msg': 'test'})
         self.assertEquals(r['msg'], 'test')
 
     def testLoggingException(self):
@@ -44,11 +43,12 @@ class TestRootLoggerHandler(unittest.TestCase):
         log.addHandler(MongoHandler(self.collection))
 
         try:
-            1/0
+            1 / 0
         except ZeroDivisionError:
             log.error('test zero division', exc_info=True)
 
-        r = self.collection.find_one({'levelname':'ERROR', 'msg':'test zero division'})
+        r = self.collection.find_one({'levelname': 'ERROR',
+            'msg': 'test zero division'})
         self.assertTrue(r['exc_info'].startswith('Traceback'))
 
     def testQueryableMessages(self):
@@ -61,12 +61,14 @@ class TestRootLoggerHandler(unittest.TestCase):
         log.info({'address': '340 N 12th St', 'state': 'PA', 'country': 'US'})
         log.info({'address': '340 S 12th St', 'state': 'PA', 'country': 'US'})
         log.info({'address': '1234 Market St', 'state': 'PA', 'country': 'US'})
-    
-        cursor = self.collection.find({'level':'info', 'msg.address': '340 N 12th St'})
+
+        cursor = self.collection.find({'level': 'info',
+            'msg.address': '340 N 12th St'})
         self.assertEquals(cursor.count(), 1, "Expected query to return 1 "
             "message; it returned %d" % cursor.count())
         self.assertEquals(cursor[0]['msg']['address'], '340 N 12th St')
 
-        cursor = self.collection.find({'level':'info', 'msg.state': 'PA'})
+        cursor = self.collection.find({'level': 'info',
+            'msg.state': 'PA'})
 
         self.assertEquals(cursor.count(), 3, "Didn't find all three documents")

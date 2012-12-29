@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 *-*
 import sys
 sys.path.append('..')
 
@@ -19,4 +19,3 @@ if __name__ == '__main__':
     log.warn("3 - warn message")
     log.error("4 - error message")
     log.critical("5 - critical message")
-
