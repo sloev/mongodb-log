@@ -4,13 +4,26 @@ try:
 except ImportError:
     from distutils import setup
 
+
+long_description = open("README.rst").read()
+
 setup(
-      name='mongodb-log',
-      version='0.1.0',
-      description='Centralized logging made simple using mongodb',
-      author='Andrei Savu',
-      author_email='contact@andreisavu.ro',
-      url='https://github.com/andreisavu/mongodb-log/tree/master',
-      packages=['mongolog'],
-      install_requires=['pymongo']
+    name='mongolog',
+    version='0.1.0',
+    description='Centralized logging made simple using mongodb',
+    long_description=long_description,
+    author='Andrei Savu',
+    author_email='contact@andreisavu.ro',
+    maintainer='Jorge Puente Sarrín',
+    maintainer_email="puentesarrin@gmail.com",
+    url='https://github.com/puentesarrin/mongodb-log',
+    packages=['mongolog'],
+    keywords=["mongolog", "logging", "mongo", "mongodb"],
+    install_requires=['pymongo'],
+    classifiers=[
+        "Intended Audience :: Developers",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Topic :: System :: Logging",
+        "Topic :: Database"],
 )
