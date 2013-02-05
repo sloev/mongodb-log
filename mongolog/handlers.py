@@ -3,8 +3,12 @@ import logging
 import getpass
 from datetime import datetime
 from socket import gethostname
-from pymongo.connection import Connection
 from bson import InvalidDocument
+
+try:
+    from pymongo import MongoClient as Connection
+except ImportError:
+    from pymongo import Connection
 
 
 class MongoFormatter(logging.Formatter):
