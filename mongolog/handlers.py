@@ -1,9 +1,10 @@
 # -*- coding: utf-8 *-*
-import logging
 import getpass
+import logging
+
+from bson import InvalidDocument
 from datetime import datetime
 from socket import gethostname
-from bson import InvalidDocument
 
 try:
     from pymongo import MongoClient as Connection
