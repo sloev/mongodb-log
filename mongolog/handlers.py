@@ -35,8 +35,8 @@ class MongoHandler(logging.Handler):
     """
 
     @classmethod
-    def to(cls, db, collection, host='localhost', port=None, username=None,
-        password=None, level=logging.NOTSET):
+    def to(cls, collection, db='mongolog', host='localhost', port=None,
+        username=None, password=None, level=logging.NOTSET):
         """ Create a handler for a given  """
         return cls(collection, db, host, port, username, password, level)
 
