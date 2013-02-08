@@ -1,9 +1,13 @@
 # -*- coding: utf-8 *-*
-import unittest
 import logging
+import unittest
 
-from pymongo.connection import Connection
-from mongolog.handlers import MongoHandler
+from mongolog import MongoHandler
+
+try:
+    from pymongo import MongoClient as Connection
+except ImportError:
+    from pymongo import Connection
 
 
 class TestRootLoggerHandler(unittest.TestCase):
@@ -15,7 +19,7 @@ class TestRootLoggerHandler(unittest.TestCase):
         self.db_name = '_mongolog_test'
         self.collection_name = 'log'
 
-        self.conn = Connection('localhost')
+        self.conn = Connection()
         self.db = self.conn[self.db_name]
         self.collection = self.db[self.collection_name]
 

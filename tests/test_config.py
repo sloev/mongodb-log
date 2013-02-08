@@ -1,11 +1,15 @@
 # -*- coding: utf-8 *-*
-import unittest
 import logging
+import unittest
 
-from pymongo.connection import Connection
-from os.path import dirname
 from logging.config import fileConfig, dictConfig
-from mongolog.handlers import MongoHandler
+from mongolog import MongoHandler
+from os.path import dirname
+
+try:
+    from pymongo import MongoClient as Connection
+except ImportError:
+    from pymongo import Connection
 
 
 class TestConfig(unittest.TestCase):
@@ -18,7 +22,7 @@ class TestConfig(unittest.TestCase):
         self.db_name = '_mongolog_test'
         self.collection_name = 'log_test'
 
-        self.conn = Connection('localhost')
+        self.conn = Connection()
         self.db = self.conn[self.db_name]
         self.collection = self.db[self.collection_name]
 
@@ -62,7 +66,7 @@ class TestDictConfig(unittest.TestCase):
             }
         }
 
-        self.conn = Connection('localhost')
+        self.conn = Connection()
         self.db = self.conn[self.db_name]
         self.collection = self.db[self.collection_name]
 
