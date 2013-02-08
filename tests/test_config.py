@@ -4,7 +4,7 @@ import unittest
 
 from logging.config import fileConfig, dictConfig
 from mongolog import MongoHandler
-from os.path import dirname
+from os.path import dirname, join
 
 try:
     from pymongo import MongoClient as Connection
@@ -16,7 +16,7 @@ class TestConfig(unittest.TestCase):
 
     def setUp(self):
         """ Create an empty database that could be used for logging """
-        filename = dirname(__file__) + '/logging-test.config'
+        filename = join(dirname(__file__), 'logging-test.config')
         fileConfig(filename)
 
         self.db_name = '_mongolog_test'

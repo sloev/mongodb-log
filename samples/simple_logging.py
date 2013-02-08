@@ -4,8 +4,7 @@ sys.path.append('..')
 
 import logging
 
-from pymongo.connection import Connection
-from mongolog.handlers import MongoHandler
+from mongolog import MongoHandler
 
 if __name__ == '__main__':
 
