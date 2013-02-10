@@ -4,6 +4,7 @@ import logging
 
 from bson import InvalidDocument
 from datetime import datetime
+from pymongo import Collection
 from socket import gethostname
 
 try:
@@ -49,13 +50,16 @@ class MongoHandler(logging.Handler):
         username=None, password=None, level=logging.NOTSET):
         """ Init log handler and store the collection handle """
         logging.Handler.__init__(self, level)
-        if (type(collection) == str):
+        if isinstance(collection, basestring):
             connection = Connection(host, port)
             if username and password:
                 connection[db].authenticate(username, password)
             self.collection = connection[db][collection]
-        else:
+        elif isinstance(collection, Collection):
             self.collection = collection
+        else:
+            raise TypeError('collection must be an instance of basestring or '
+                             'Collection')
         self.formatter = MongoFormatter()
 
     def emit(self, record):
