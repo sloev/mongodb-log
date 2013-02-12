@@ -4,7 +4,7 @@ import logging
 
 from bson import InvalidDocument
 from datetime import datetime
-from pymongo import Collection
+from pymongo.collection import Collection
 from socket import gethostname
 
 try:
