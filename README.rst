@@ -6,6 +6,9 @@ MongoLog: Centralized logging made simple using MongoDB
 :Author: `Andrei Savu`_
 :Maintainer: `Jorge Puente Sarrín`_
 
+.. image:: https://travis-ci.org/puentesarrin/mongodb-log.png
+        :target: https://travis-ci.org/puentesarrin/mongodb-log
+
 Setup
 -----
 
