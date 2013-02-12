@@ -45,7 +45,7 @@ class TestConfig(unittest.TestCase):
 
         message = self.collection.find_one({'levelname': 'DEBUG',
                                             'msg': 'test'})
-        self.assertEquals(message['msg'], 'test')
+        self.assertEqual(message['msg'], 'test')
 
 
 class TestDictConfig(unittest.TestCase):
@@ -81,9 +81,9 @@ class TestDictConfig(unittest.TestCase):
         if dictConfig:
             dictConfig(self.configDict)
         else:
-            self.assertEquals('Python<2.7', 'Python<2.7')
+            self.assertEqual('Python<2.7', 'Python<2.7')
             return
-        
+
         log = logging.getLogger('dict_example')
         log.addHandler(MongoHandler(self.collection_name, self.db_name))
 
@@ -91,15 +91,15 @@ class TestDictConfig(unittest.TestCase):
 
         message = self.collection.find_one({'levelname': 'DEBUG',
                                             'msg': 'dict_example'})
-        self.assertEquals(message, None,
+        self.assertEqual(message, None,
             "Logger put debug message in when info level handler requested")
 
         log.info('dict_example')
         message = self.collection.find_one({'levelname': 'INFO',
                                             'msg': 'dict_example'})
-        self.assertNotEquals(message, None,
+        self.assertNotEqual(message, None,
             "Logger didn't insert message into database")
-        self.assertEquals(message['msg'], 'dict_example',
+        self.assertEqual(message['msg'], 'dict_example',
             "Logger didn't insert correct message into database")
 
     def tearDown(self):

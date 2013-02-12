@@ -50,7 +50,7 @@ class MongoHandler(logging.Handler):
         username=None, password=None, level=logging.NOTSET):
         """ Init log handler and store the collection handle """
         logging.Handler.__init__(self, level)
-        if isinstance(collection, basestring):
+        if isinstance(collection, str):
             connection = Connection(host, port)
             if username and password:
                 connection[db].authenticate(username, password)
@@ -66,6 +66,6 @@ class MongoHandler(logging.Handler):
         """ Store the record to the collection. Async insert """
         try:
             self.collection.insert(self.format(record))
-        except InvalidDocument, e:
+        except InvalidDocument as e:
             logging.error("Unable to save log record: %s", e.message,
                 exc_info=True)

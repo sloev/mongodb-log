@@ -2,6 +2,6 @@
 import sys
 sys.path = ['..'] + sys.path
 
-from test_handler import *
-from test_config import *
-from test_auth import *
+from tests.test_handler import *
+from tests.test_config import *
+from tests.test_auth import *

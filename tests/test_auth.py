@@ -41,4 +41,4 @@ class TestAuth(unittest.TestCase):
 
         message = self.collection.find_one({'levelname': 'ERROR',
                                             'msg': 'test'})
-        self.assertEquals(message['msg'], 'test')
+        self.assertEqual(message['msg'], 'test')

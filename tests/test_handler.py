@@ -38,7 +38,7 @@ class TestRootLoggerHandler(unittest.TestCase):
         log.debug('test')
 
         r = self.collection.find_one({'levelname': 'DEBUG', 'msg': 'test'})
-        self.assertEquals(r['msg'], 'test')
+        self.assertEqual(r['msg'], 'test')
 
     def testLoggingException(self):
         """ Logging example with exception """
@@ -67,11 +67,11 @@ class TestRootLoggerHandler(unittest.TestCase):
 
         cursor = self.collection.find({'levelname': 'INFO',
             'msg.address': '340 N 12th St'})
-        self.assertEquals(cursor.count(), 1, "Expected query to return 1 "
+        self.assertEqual(cursor.count(), 1, "Expected query to return 1 "
             "message; it returned %d" % cursor.count())
-        self.assertEquals(cursor[0]['msg']['address'], '340 N 12th St')
+        self.assertEqual(cursor[0]['msg']['address'], '340 N 12th St')
 
         cursor = self.collection.find({'levelname': 'INFO',
             'msg.state': 'PA'})
 
-        self.assertEquals(cursor.count(), 3, "Didn't find all three documents")
+        self.assertEqual(cursor.count(), 3, "Didn't find all three documents")
