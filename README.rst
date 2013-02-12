@@ -96,4 +96,4 @@ Have fun!
 .. _Andrei Savu: https://github.com/andreisavu
 .. _Jorge Puente Sarrín: https://github.com/puentesarrin
 .. _MongoDB website: http://www.mongodb.org
-.. _MongoDB blog: http://blog.mongodb.org
+.. _MongoDB blog: http://blog.mongodb.org/post/172254834/mongodb-is-fantastic-for-logging
