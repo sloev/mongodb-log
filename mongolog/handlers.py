@@ -1,4 +1,5 @@
 # -*- coding: utf-8 *-*
+import sys
 import getpass
 import logging
 
@@ -12,6 +13,8 @@ try:
 except ImportError:
     from pymongo import Connection
 
+if sys.version_info[0] >= 3:
+    unicode = str
 
 class MongoFormatter(logging.Formatter):
     def format(self, record):
