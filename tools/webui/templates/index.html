@@ -1,12 +1,12 @@
 $def with (logs)
 
-Filters: 
+Filters:
 [<a href="/">all</a>]
-[<a href="/info">info</a>] 
-[<a href="/debug">debug</a>] 
-[<a href="/warning">warning</a>] 
-[<a href="/error">error</a>] 
-[<a href="/critical">critical</a>] 
+[<a href="/info">info</a>]
+[<a href="/debug">debug</a>]
+[<a href="/warning">warning</a>]
+[<a href="/error">error</a>]
+[<a href="/critical">critical</a>]
 
 <br /><br />
 
@@ -28,13 +28,13 @@ Latest 100 log message in reverse chronological order:
 </tr>
 $for record in logs:
     <tr>
-    <td>$record['level']</td>
+    <td>$record['levelname']</td>
     <td>$record['name']</td>
     <td>$record['host']</td>
-    <td>$record['line_no']</td>
-    <td>$record['funcname']</td>
-    <td>$record['file']</td>
-    <td>$record['user']</td>
+    <td>$record['lineno']</td>
+    <td>$record['funcName']</td>
+    <td>$record['filename']</td>
+    <td>$record['username']</td>
     <td>$record['msg']</td>
     <td>$record['time']</td>
     </tr>
