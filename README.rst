@@ -1,13 +1,21 @@
-
 MongoLog: Centralized logging made simple using MongoDB
 =======================================================
+
+.. image:: https://travis-ci.org/puentesarrin/mongodb-log.png
+    :target: https://travis-ci.org/puentesarrin/mongodb-log
+    :alt: Travis CI status
+
+.. image:: https://pypip.in/v/mongolog/badge.png
+    :target: https://pypi.python.org/pypi/mongolog
+    :alt: Latest PyPI version
+
+.. image:: https://pypip.in/d/mongolog/badge.png
+    :target: https://pypi.python.org/pypi/mongolog
+    :alt: Number of PyPI downloads
 
 :Info: MongoDB python logging handler. Python centralized logging made easy.
 :Author: `Andrei Savu`_
 :Maintainer: `Jorge Puente Sarrín`_
-
-.. image:: https://travis-ci.org/puentesarrin/mongodb-log.png
-        :target: https://travis-ci.org/puentesarrin/mongodb-log
 
 Setup
 -----
