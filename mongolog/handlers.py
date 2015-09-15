@@ -3,15 +3,10 @@ import sys
 import getpass
 import logging
 
-from bson import InvalidDocument
-from datetime import datetime
-from pymongo.collection import Collection
-from socket import gethostname
-
-try:
-    from pymongo import MongoClient as Connection
-except ImportError:
-    from pymongo import Connection
+from bson       import InvalidDocument
+from datetime   import datetime
+from socket     import gethostname
+from motor      import MotorClient, MotorCollection
 
 if sys.version_info[0] >= 3:
     unicode = str
@@ -44,33 +39,35 @@ class MongoHandler(logging.Handler):
     Logs all messages to a mongo collection. This  handler is
     designed to be used with the standard python logging mechanism.
     """
-
-    @classmethod
-    def to(cls, collection, db='mongolog', host='localhost', port=None,
-        username=None, password=None, level=logging.NOTSET):
-        """ Create a handler for a given  """
-        return cls(collection, db, host, port, username, password, level)
-
-    def __init__(self, collection, db='mongolog', host='localhost', port=None,
-        username=None, password=None, level=logging.NOTSET):
+    def __init__(self, collection='central_log', db='mongolog', host='localhost', port=27017,
+        username=None, password=None, level=logging.NOTSET, redis_client=None, redis_channel="/syslog"):
         """ Init log handler and store the collection handle """
         logging.Handler.__init__(self, level)
         if isinstance(collection, str):
-            connection = Connection(host, port)
+            connection = MotorClient(host, port)
             if username and password:
                 connection[db].authenticate(username, password)
             self.collection = connection[db][collection]
-        elif isinstance(collection, Collection):
+        elif isinstance(collection, MotorCollection):
             self.collection = collection
         else:
             raise TypeError('collection must be an instance of basestring or '
-                             'Collection')
+                             'MotorCollection')
+        self.redis_client = redis_client
+        self.redis_channel = redis_channel
         self.formatter = MongoFormatter()
+
+    def log_callback(self,result, error):
+        print "callback:", result, error
 
     def emit(self, record):
         """ Store the record to the collection. Async insert """
         try:
-            self.collection.insert(self.format(record))
+            doc = self.format(record)
+            self.collection.insert(doc, callback=self.log_callback)
+            if self.redis_client:
+                self.redis_client.publish(self.redis_channel, doc)
         except InvalidDocument as e:
             logging.error("Unable to save log record: %s", e.message,
                 exc_info=True)
+
