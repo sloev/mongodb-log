@@ -7,8 +7,10 @@ from bson       import InvalidDocument
 from datetime   import datetime
 from socket     import gethostname
 from motor      import MotorClient, MotorCollection
+import sys
+import traceback 
 
-
+import json
 def make_log_request_method(log_name):
     def log_request(handler):
         logger = logging.getLogger(log_name)
@@ -22,9 +24,14 @@ def make_log_request_method(log_name):
             log_method = logger.error
 
         summary = handler._request_summary()
+        user = handler.current_user
+        user_string = ""
+        if user:
+            user_string = "[auth user=%s]" % user.username
         #lav fikumdik med at forksellige status gir forskellige log methods
         request_time = 1000 * handler.request.request_time()
-        msg = "HTTP: %d %s %.2fms" % (status, summary, request_time)
+
+        msg = "HTTP: %d %s %.2fms %s" % (status, summary, request_time, user_string)
         log_method(msg)
 
     return log_request
@@ -92,7 +99,14 @@ class MongoLogging(logging.Handler):
             if '_id' in doc:
                 doc.pop('_id')
             if self.redis_client:
-                self.redis_client.publish(self.redis_channel, doc)
+                try:
+                    self.redis_client.publish(self.redis_channel,json.dumps(doc))
+                except Exception,e:
+                    msg =  "Mongo_log_json_dumps_error:"
+                    type_, value_, traceback_ = sys.exc_info()
+                    t =  msg, type_, value_, traceback.format_tb(traceback_)
+                    print str(t)
+
         except InvalidDocument as e:
             logging.error("Unable to save log record: %s", e.message,
                 exc_info=True)
